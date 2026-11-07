@@ -35,7 +35,7 @@ def nav():
     return f"""<header class="site-h">
 <div class="topbar"><div class="wrap"><a href="tel:{SITE['phone_tel']}">{icon('phone')}{SITE['phone_display']}</a><a href="mailto:{SITE['email']}">{icon('mail')}{SITE['email']}</a></div></div>
 <div class="wrap navrow">
-<a class="brand" href="/"><span class="mark" aria-hidden="true"></span>Stealth <b>Security</b></a>
+<a class="brand" href="/" aria-label="Stealth Security home"><img class="mark" src="/assets/mark-light.png" alt="" width="34" height="42"><span class="word"><span class="w1">Stealth</span><span class="w2">Security</span></span></a>
 <button class="menu-t" aria-expanded="false" aria-controls="mainnav">Menu</button>
 <nav id="mainnav" aria-label="Main"><ul class="nav">
 <li><a href="/">Home</a></li>
@@ -51,7 +51,7 @@ def footer():
     svc = "".join(f'<li><a href="/services/{s["slug"]}">{E(s["short"])}</a></li>' for s in SERVICES)
     towns = "".join(f'<li><a href="/service-areas/{t["slug"]}">{E(t["name"])}</a></li>' for t in TOWNS)
     return f"""<footer class="site-f"><div class="wrap fgrid">
-<div><p class="brand">Stealth <b>Security</b></p><p>{E(SITE['tagline'])}</p>
+<div><p class="brand"><img class="mark" src="/assets/mark-light.png" alt="" width="30" height="37"><span class="word"><span class="w1">Stealth</span><span class="w2">Security</span></span></p><p>{E(SITE['tagline'])}</p><p class="lic-f">{icon('shield')}Licensed by the {SITE['license_by']}<br>{SITE['license_class']}<br>License {SITE['license_no']}</p>
 <p><a href="tel:{SITE['phone_tel']}">{SITE['phone_display']}</a><br><a href="mailto:{SITE['email']}">{SITE['email']}</a><br>{SITE['city']}, Arkansas</p>
 <p><a href="{SITE['facebook']}" rel="noopener">Facebook</a></p></div>
 <div><h2>Services</h2><ul>{svc}</ul></div>
@@ -63,6 +63,11 @@ def cta_band(text="Ready to protect your property?", sub=None):
     sub = sub or f"Call {SITE['phone_display']} or request a free quote."
     return f"""<section class="band"><div class="wrap band-in"><div><h2>{E(text)}</h2><p>{E(sub)}</p></div>
 <div class="btns"><a class="btn" href="/contact">Request a Free Quote</a><a class="btn btn-ghost" href="tel:{SITE['phone_tel']}">{icon('phone')}{SITE['phone_display']}</a></div></div></section>"""
+
+def license_strip():
+    return (f'<section class="lic"><div class="wrap lic-in">{icon("shield","ico-lg")}<p><b>State licensed alarm systems company.</b> '
+            f'Stealth Security is licensed by the {SITE["license_by"]} as a {SITE["license_class"]}, '
+            f'license number <b>{SITE["license_no"]}</b>.</p></div></section>')
 
 def crumbs(items):
     lis = "".join((f'<li><a href="{h}">{E(n)}</a></li>' if h else f'<li aria-current="page">{E(n)}</li>') for n, h in items)
@@ -83,6 +88,9 @@ BUSINESS_LD = {
     "address": {"@type": "PostalAddress", "addressLocality": SITE["city"], "addressRegion": SITE["region"], "addressCountry": "US"},
     "areaServed": [t["name"] + ", AR" if t["slug"] != "northwest-arkansas" else "Northwest Arkansas" for t in TOWNS],
     "sameAs": [SITE["facebook"]],
+    "hasCredential": {"@type": "EducationalOccupationalCredential", "credentialCategory": "license",
+        "name": "Class E Alarm Systems Company License (Unrestricted) " + SITE["license_no"],
+        "recognizedBy": {"@type": "GovernmentOrganization", "name": "Arkansas State Police"}},
     "description": "Security systems, commercial fire alarm, CCTV surveillance, access control and managed IT services in Arkansas.",
 }
 
@@ -93,9 +101,9 @@ def page(path, title, desc, body, ld=None):
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(title)}</title><meta name="description" content="{E(desc)}"><link rel="canonical" href="{canon}">
 <meta property="og:type" content="website"><meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{canon}"><meta property="og:site_name" content="Stealth Security">
-<meta name="theme-color" content="#16181c"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#16181c"><link rel="icon" href="/assets/favicon-48.png" type="image/png"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><meta property="og:image" content="{SITE['url']}/assets/logo-dark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Jost:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css">{lds}</head>
 <body><a class="skip" href="#main">Skip to content</a>{nav()}<main id="main">{body}</main>{footer()}<script src="/assets/site.js" defer></script></body></html>"""
     d = os.path.join(OUT, path.strip("/"))
@@ -117,19 +125,19 @@ def build():
         shutil.rmtree(OUT)
     os.makedirs(OUT)
     shutil.copytree(os.path.join(ROOT, "src", "assets"), os.path.join(OUT, "assets"))
-    shutil.copy(os.path.join(ROOT, "src", "assets", "favicon.svg"), os.path.join(OUT, "favicon.svg"))
+    shutil.copy(os.path.join(ROOT, "src", "assets", "favicon-48.png"), os.path.join(OUT, "favicon.ico"))
 
     # Home
     towns = "".join(f'<a class="chip" href="/service-areas/{t["slug"]}">{icon("pin")}{E(t["name"])}</a>' for t in TOWNS)
     inds = "".join(f'<li><a href="/industries/{i["slug"]}">{E(i["name"])}</a></li>' for i in INDUSTRIES)
     body = hero("Arkansas security & technology",
                 "Security, Fire Alarm, Surveillance & Managed IT for Arkansas",
-                "Professionally installed security systems, commercial fire alarms, surveillance cameras, access control and managed IT services from one local company.") + f"""
+                "Professionally installed security systems, commercial fire alarms, surveillance cameras, access control and managed IT services from one local company.") + license_strip() + f"""
 <section class="sec"><div class="wrap"><p class="eyebrow">What we do</p><h2 class="h2">Our services</h2>{svc_cards(SERVICES)}</div></section>
 <section class="sec alt"><div class="wrap split"><div><p class="eyebrow">Local advantage</p><h2 class="h2">Why Stealth Security</h2>
 <p>Unlike national providers, Stealth Security delivers local service, support and accountability. Security, life safety and IT are handled under one roof, so one team knows your whole building.</p>
 <a class="btn" href="/contact">Request a Free Quote</a></div>
-{ul(["Arkansas based", "Licensed and insured", "Commercial and residential", "Local support", "Security, life safety and IT under one roof"])}</div></section>
+{ul(["Arkansas based", f"Licensed by the Arkansas State Police (License {SITE['license_no']})", "Commercial and residential", "Local support", "Security, life safety and IT under one roof"])}</div></section>
 <section class="sec"><div class="wrap split"><div><p class="eyebrow">Who we serve</p><h2 class="h2">Industries</h2><ul class="links">{inds}</ul></div>
 <div><p class="eyebrow">Where we work</p><h2 class="h2">Service area</h2><div class="chips">{towns}</div></div></div></section>
 {cta_band()}"""
@@ -147,6 +155,11 @@ def build():
         c, ld = crumbs([("Home", "/"), ("Services", "/services"), (s["short"], None)])
         groups = "".join(f'<div class="group"><h3>{E(h)}</h3>{ul(items)}</div>' for h, items in s["groups"])
         brands = (f'<div class="brands"><h2 class="h3">Supported manufacturers and platforms</h2><p>' + " · ".join(E(b) for b in s["brands"]) + "</p></div>") if s["brands"] else ""
+        prods = ""
+        if s.get("products"):
+            prods = ('<section class="sec"><div class="wrap"><p class="eyebrow">What we install</p><h2 class="h2">Products we work with</h2><div class="prods">'
+                     + "".join(f'<article class="prod"><h3>{E(n)}</h3><p class="by">{E(by)}</p><p>{E(t)}</p></article>' for n, by, t in s["products"])
+                     + '</div><p class="note">Product names are trademarks of their respective owners.</p></div></section>')
         others = [o for o in SERVICES if o["slug"] != s["slug"]]
         prose = "".join(f"<p>{E(p)}</p>" for p in s["body"])
         pricing_link = '<p><a class="btn btn-ghost-dark" href="/managed-it-pricing">See managed IT pricing</a></p>' if s["slug"] == "managed-it" else ""
@@ -156,6 +169,8 @@ def build():
         body = hero(s["short"], s["title"], s["lead"], c) + f"""
 <section class="sec"><div class="wrap narrow prose">{prose}{pricing_link}</div></section>
 <section class="sec alt"><div class="wrap"><div class="groups">{groups}</div>{brands}</div></section>
+{license_strip() if s["slug"] != "managed-it" else ""}
+{prods}
 <section class="sec"><div class="wrap"><h2 class="h2">Other services</h2>{svc_cards(others)}</div></section>
 {cta_band(s['cta'].capitalize() + ".")}"""
         page(f"/services/{s['slug']}", f"{s['title']} | Stealth Security Arkansas", s["meta"], body, [ld, svc_ld])
@@ -180,7 +195,10 @@ def build():
          + f"""<section class="sec"><div class="wrap split"><div class="prose"><p>We focus on reliable installation, responsive local support and long-term customer relationships.</p>
 <p>Most companies hire one vendor for fire alarms, another for cameras and a third for computers. Stealth Security handles security, life safety and IT under one roof, so there is one local team that knows your whole building and one number to call.</p>
 <p>We are based in {SITE['city']}, Arkansas, and serve customers across the River Valley and beyond.</p></div>
-<div><h2 class="h3">What we do</h2>{ul([s['short'] for s in SERVICES])}</div></div></section>""" + cta_band(), [ld, BUSINESS_LD])
+<div><h2 class="h3">What we do</h2>{ul([s['short'] for s in SERVICES])}</div></div></section>""" + f"""
+<section class="sec alt"><div class="wrap narrow"><p class="eyebrow">Licensing</p><h2 class="h2">State licensed</h2>
+<p>Arkansas requires companies that sell, install and service alarm systems to be licensed by the Arkansas State Police under A.C.A. § 17-40-101 et seq. Stealth Security holds that license:</p>
+<dl class="lic-dl"><dt>Licensed name</dt><dd>Stealth Security-Arkansas</dd><dt>License type</dt><dd>{SITE['license_class']}</dd><dt>License number</dt><dd>{SITE['license_no']}</dd><dt>Issued by</dt><dd>{SITE['license_by']}</dd></dl></div></section>""" + cta_band(), [ld, BUSINESS_LD])
 
     # Contact
     c, ld = crumbs([("Home", "/"), ("Contact", None)])

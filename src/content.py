@@ -12,6 +12,9 @@ SITE = dict(
     city="Clarksville", region="AR",
     facebook="https://www.facebook.com/185744284629912",
     tagline="Arkansas-based security, fire alarm, surveillance and managed IT.",
+    license_no="CMPY.0003284",
+    license_class="Class E Alarm Systems Company (Unrestricted)",
+    license_by="Arkansas State Police",
 )
 
 SERVICES = [
@@ -31,6 +34,12 @@ SERVICES = [
       ("Service and repair", ["Troubleshooting", "Device replacement", "Panel programming"]),
     ],
     brands=["Fire-Lite", "Honeywell", "Silent Knight", "Bosch", "Napco"],
+    products=[
+      ("Fire-Lite Alarms", "by Honeywell",
+       "Addressable fire alarm control panels for small to mid-size commercial buildings, using Fire-Lite's LiteSpeed protocol for fast device response, plus conventional 2-, 4-, 5- and 10-zone panels for simpler sites. A dependable, easy-to-service choice for offices, retail, churches and light industrial buildings."),
+      ("Silent Knight", "by Honeywell",
+       "IFP-series addressable fire alarm panels that scale from smaller sites (IFP-50) to medium and large facilities (IFP-100 and IFP-1000), with voice-evacuation versions for buildings that need spoken emergency instructions. A strong fit for schools, clinics and multi-building campuses."),
+    ],
     cta="Schedule fire alarm service"),
   dict(slug="security-systems", short="Security Systems", icon="shield",
     title="Smart Security Systems",
@@ -46,7 +55,12 @@ SERVICES = [
       ("Control", ["Mobile app arming and disarming", "User codes and schedules", "Real-time alerts"]),
       ("Monitoring", ["Professional 24/7 monitoring", "Emergency dispatch"]),
     ],
-    brands=[], cta="Get a security system quote"),
+    brands=["Napco"],
+    products=[
+      ("Napco Prima", "all-in-one security and smart home",
+       "A 7-inch touchscreen panel that combines intrusion, video, fire and smart-home control in one system. Prima connects over Wi-Fi and cellular, supports Z-Wave lights, locks and thermostats, adds video doorbells, cameras and wireless smoke/CO detectors, and is controlled from the Prima app. It works for homes, apartments and light commercial spaces, and can take over many existing hardwired systems."),
+    ],
+    cta="Get a security system quote"),
   dict(slug="cctv-surveillance", short="CCTV & Surveillance", icon="camera",
     title="Commercial Camera Systems",
     meta="Commercial CCTV and surveillance camera systems in Arkansas with AI video analytics, remote viewing and license plate recognition.",
@@ -60,7 +74,7 @@ SERVICES = [
       ("Camera solutions", ["Commercial surveillance", "AI video analytics", "Remote viewing", "Multi-location monitoring"]),
       ("Specialty systems", ["License plate recognition", "Warehouse monitoring", "Parking lot surveillance", "Construction site cameras"]),
     ],
-    brands=["Uniview", "Reolink", "Professional IP systems"],
+    brands=["Uniview", "Reolink", "Professional IP systems"], products=[],
     cta="Get a camera system estimate"),
   dict(slug="access-control", short="Access Control", icon="key",
     title="Access Control Solutions",
@@ -75,7 +89,7 @@ SERVICES = [
       ("Solutions", ["Card access systems", "Key fob credentials", "Mobile credentials", "Electronic locks", "Multi-door systems"]),
       ("Benefits", ["Employee accountability", "Remote management", "Door schedules", "Entry audit logs"]),
     ],
-    brands=[], cta="Get an access control quote"),
+    brands=[], products=[], cta="Get an access control quote"),
   dict(slug="managed-it", short="Managed IT Services", icon="server",
     title="Managed IT Services for Arkansas Businesses",
     meta="Managed IT for Arkansas businesses: monitoring, patching, help desk, Microsoft 365, networking and cybersecurity from a local provider.",
@@ -87,11 +101,23 @@ SERVICES = [
     ],
     groups=[
       ("Managed services", ["Remote monitoring", "Patch management", "Antivirus management", "Help desk support"]),
+      ("Hardware", ["ByteSpeed desktops, laptops and servers", "Lenovo ThinkPad and ThinkCentre", "Setup, imaging and installation"]),
       ("Microsoft 365", ["Exchange", "Teams", "SharePoint", "OneDrive", "Copilot"]),
       ("Network services", ["Firewalls", "Switching", "Wireless networks", "VPNs"]),
-      ("Cybersecurity", ["Endpoint protection", "Email security", "Backups", "Security awareness"]),
+      ("Cybersecurity", ["Malwarebytes endpoint protection", "Email security", "Offsite backups", "Security awareness"]),
     ],
-    brands=[], cta="Schedule a free IT assessment"),
+    brands=[],
+    products=[
+      ("ByteSpeed", "computers and servers",
+       "Desktops, laptops, workstations and servers built to order by ByteSpeed, a U.S. manufacturer that supplies schools, healthcare, government and businesses. We spec, configure and install ByteSpeed hardware, including servers for on-site file sharing and virtualization."),
+      ("Lenovo", "business laptops and desktops",
+       "Lenovo ThinkPad laptops and ThinkCentre desktops for offices that want a widely available business-class brand. We set them up, enroll them in management and keep them patched."),
+      ("Malwarebytes", "endpoint protection",
+       "Malwarebytes business endpoint protection (now sold as ThreatDown) guards your computers against malware and ransomware. We deploy it, watch its alerts and handle cleanup if something gets through."),
+      ("Offsite backups", "encrypted, tested, recoverable",
+       "Automatic backups of servers and key computers copied off-site and encrypted, so a fire, theft, failed drive or ransomware attack doesn't take your data with it. We monitor every backup job and test restores, because a backup only counts if it comes back."),
+    ],
+    cta="Schedule a free IT assessment"),
 ]
 
 PRICING = [
