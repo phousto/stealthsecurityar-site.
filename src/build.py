@@ -1,7 +1,7 @@
 """Build stealthsecurityar.com into ../public. Run: python3 src/build.py"""
 import json, os, shutil, html
 from datetime import date
-from content import SITE, SERVICES, PRICING, INDUSTRIES, TOWNS
+from content import SITE, SERVICES, PRICING, PRICING_NOTES, INDUSTRIES, TOWNS
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "public")
@@ -186,9 +186,9 @@ def build():
 {f'<p class="intro">{E(p["intro"])}</p>' if p['intro'] else ''}{ul(p['items'])}
 <p class="best"><b>Best for:</b> {E(p['best'])}</p><a class="btn{'' if p['featured'] else ' btn-ghost-dark'}" href="/contact">Get started</a></div>""" for p in PRICING)
     page("/managed-it-pricing", "Managed IT Pricing | Stealth Security Arkansas",
-         "Managed IT for Arkansas businesses from $99 per device per month: monitoring, patching, antivirus, help desk, Microsoft 365 and security monitoring.",
+         "Managed IT for Arkansas businesses from $55 per device per month, with Malwarebytes and offsite backup included. Help desk plans from $125 per user.",
          hero("Managed IT", "Managed IT pricing", "Predictable monthly support, priced per device.", c, buttons=False)
-         + f'<section class="sec"><div class="wrap"><div class="tiers">{tiers}</div><p class="note">Not sure which plan fits? Start with a free IT assessment and we\'ll recommend one.</p></div></section>'
+         + f'<section class="sec"><div class="wrap"><div class="tiers">{tiers}</div><ul class="pnotes">{"".join(f"<li>{icon('check')}{E(n)}</li>" for n in PRICING_NOTES)}</ul></div></section>'
          + cta_band("Schedule a free IT assessment."), [ld])
 
     # About

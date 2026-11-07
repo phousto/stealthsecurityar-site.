@@ -88,7 +88,7 @@ SERVICES = [
       ("Camera solutions", ["Commercial surveillance", "AI video analytics", "Remote viewing", "Multi-location monitoring"]),
       ("Specialty systems", ["License plate recognition", "Warehouse monitoring", "Parking lot surveillance", "Construction site cameras"]),
     ],
-    brands=["Uniview", "Reolink", "Professional IP systems"], products=[],
+    brands=["Uniview", "Reolink", "Verkada", "Professional IP systems"], products=[],
     cta="Get a camera system estimate"),
   dict(slug="access-control", short="Access Control", icon="key",
     title="Access Control Solutions",
@@ -106,7 +106,7 @@ SERVICES = [
     brands=[], products=[], cta="Get an access control quote"),
   dict(slug="managed-it", short="Managed IT Services", icon="server",
     title="Managed IT Services for Arkansas Businesses",
-    meta="Managed IT for Arkansas businesses: monitoring, patching, help desk, Microsoft 365, networking and cybersecurity from a local provider.",
+    meta="Managed IT for Arkansas businesses from $55 per device: monitoring, patching, Malwarebytes, offsite backup, help desk, Microsoft 365 and ByteSpeed hardware.",
     card="Proactive support, cybersecurity, Microsoft 365 management and network solutions.",
     lead="Reduce downtime and improve cybersecurity with proactive IT management from a local team.",
     body=[
@@ -115,15 +115,21 @@ SERVICES = [
     ],
     groups=[
       ("Managed services", ["Remote monitoring", "Patch management", "Antivirus management", "Help desk support"]),
-      ("Hardware", ["ByteSpeed desktops, laptops and servers", "Lenovo ThinkPad and ThinkCentre", "Setup, imaging and installation"]),
+      ("Hardware", ["ByteSpeed desktops, laptops and servers", "Lenovo ThinkPad and ThinkCentre", "Esports and computer labs", "Setup, imaging and installation"]),
       ("Microsoft 365", ["Exchange", "Teams", "SharePoint", "OneDrive", "Copilot"]),
-      ("Network services", ["Firewalls", "Switching", "Wireless networks", "VPNs"]),
+      ("Network services", ["Firewalls", "Switching", "Ruckus Wi-Fi", "Cradlepoint 5G backup internet", "VPNs"]),
       ("Cybersecurity", ["Malwarebytes endpoint protection", "Email security", "Offsite backups", "Security awareness"]),
     ],
     brands=[],
     products=[
       ("ByteSpeed", "computers and servers",
-       "Desktops, laptops, workstations and servers built to order by ByteSpeed, a U.S. manufacturer that supplies schools, healthcare, government and businesses. We spec, configure and install ByteSpeed hardware, including servers for on-site file sharing and virtualization."),
+       "Desktops, laptops, workstations and servers built to order in the U.S. by ByteSpeed, which supplies schools, healthcare, government and businesses. ByteSpeed computers come with a 5-year warranty and free lifetime U.S.-based tech support, and we spec, configure, image and install them for you."),
+      ("Gravity by ByteSpeed", "esports and high-performance PCs",
+       "Custom gaming and high-performance PCs for school esports teams and computer labs, plus esports furniture, Logitech G gear, streaming and shoutcasting equipment, and team-logo builds. The same machines handle Adobe, CAD, engineering and AI work."),
+      ("Networking and Wi-Fi", "Ruckus, Juniper, Cradlepoint",
+       "Ruckus Wi-Fi for schools, offices and hospitality; Juniper networking; and Cradlepoint LTE and 5G routers for backup internet, job sites and vehicles."),
+      ("Managed detection and response", "Arctic Wolf",
+       "For organizations that need more than antivirus: Arctic Wolf's 24/7 security operations team watches your network, collects logs, hunts for threats and alerts us when something needs action."),
       ("Lenovo", "business laptops and desktops",
        "Lenovo ThinkPad laptops and ThinkCentre desktops for offices that want a widely available business-class brand. We set them up, enroll them in management and keep them patched."),
       ("Malwarebytes", "endpoint protection",
@@ -135,16 +141,22 @@ SERVICES = [
 ]
 
 PRICING = [
-  dict(name="Essentials", price="$99", unit="per device / month", featured=False,
-       intro="", items=["Monitoring", "Patch management", "Antivirus management", "Asset tracking"],
+  dict(name="Essentials", price="$55", unit="per device / month", featured=False,
+       intro="", items=["24/7 monitoring", "Patch management", "Malwarebytes endpoint protection", "Offsite backup", "Asset tracking"],
        best="Small offices, retail"),
-  dict(name="Business", price="$149", unit="per device / month", featured=True,
-       intro="Everything in Essentials, plus:", items=["Help desk support", "Microsoft 365 support", "Vendor coordination", "Security monitoring"],
+  dict(name="Business", price="$125", unit="per user / month", featured=True,
+       intro="Everything in Essentials for all of a user's devices, plus:", items=["Help desk support", "Microsoft 365 support", "Vendor coordination", "Security monitoring"],
        best="Growing businesses"),
-  dict(name="Complete", price="Custom", unit="pricing", featured=False,
-       intro="Everything in Business, plus:", items=["Backup and disaster recovery", "Compliance support", "Cybersecurity management", "Strategic IT planning", "Co-managed IT"],
+  dict(name="Complete", price="$175+", unit="per user / month", featured=False,
+       intro="Everything in Business, plus:", items=["Backup and disaster recovery planning", "Compliance support", "Cybersecurity management", "Strategic IT planning", "Co-managed IT"],
        best="Healthcare, multi-site organizations, larger businesses"),
 ]
+PRICING_NOTES = [
+  "Malwarebytes protection and offsite backup are included in every plan.",
+  "Servers: $150 per server / month.",
+  "Every plan starts with a free IT assessment, so you know exactly what you'll pay before you sign.",
+]
+
 
 INDUSTRIES = [
   dict(slug="healthcare", name="Healthcare & Clinics",
@@ -154,7 +166,7 @@ INDUSTRIES = [
   dict(slug="schools-nonprofits", name="Schools, Churches & Nonprofits",
     meta="Fire alarm, access control, cameras and IT for Arkansas schools, churches and nonprofit organizations.",
     lead="Organizations that serve the public need safe buildings and dependable technology on a careful budget.",
-    needs=["Door schedules that lock and unlock automatically", "Fire alarm testing and inspections", "Cameras for entrances, hallways and parking lots", "Managed IT and network support for staff and classrooms"]),
+    needs=["Door schedules that lock and unlock automatically", "Fire alarm testing and inspections", "Cameras for entrances, hallways and parking lots", "Managed IT and network support for staff and classrooms", "Esports and computer labs built on ByteSpeed PCs"]),
   dict(slug="retail-restaurants", name="Retail & Restaurants",
     meta="Cameras, alarms and IT for Arkansas retail stores and restaurants, with remote viewing from your phone.",
     lead="Shrink, after-hours break-ins and a point-of-sale outage all cost money. The right systems prevent most of it.",

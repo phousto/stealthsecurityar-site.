@@ -156,3 +156,4 @@ h1,h2,h3,.h2,.h3{font-family:var(--display);line-height:1.1;text-wrap:balance;ma
 .prod p{margin:0 0 .4em}
 .feat-sec{background:var(--white);border-block:1px solid var(--line)}
 .lead-d{font-size:1.15rem;color:var(--muted);max-width:52ch;margin:0 0 22px}
+.pnotes{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:10px}.pnotes li{display:flex;gap:10px}.pnotes .ico{color:var(--accent);margin-top:.25em}
