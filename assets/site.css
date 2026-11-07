@@ -31,7 +31,20 @@ h1,h2,h3,.h2,.h3{font-family:var(--display);line-height:1.1;text-wrap:balance;ma
 .navrow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
 .brand{font:700 1.45rem/1 var(--display);color:#fff;text-decoration:none;display:flex;align-items:center;gap:10px;margin:0}
 .brand b{color:var(--accent)}
-.mark{width:22px;height:26px;background:var(--accent);clip-path:polygon(50% 0,100% 18%,100% 55%,50% 100%,0 55%,0 18%)}
+.mark{width:auto;height:42px;display:block}
+.brand .word{display:flex;flex-direction:column;font-family:'Jost',var(--body);line-height:1;text-transform:uppercase}
+.brand .w1{font-weight:700;font-size:1.25rem;letter-spacing:.32em}
+.brand .w2{font-weight:500;font-size:.72rem;letter-spacing:.62em;margin-top:5px;color:var(--on-dark-2)}
+.site-f .brand .mark{height:37px}
+.lic{background:var(--paper-2);border-bottom:1px solid var(--line)}
+.lic-in{display:flex;gap:16px;align-items:center;padding-block:18px}
+.lic-in p{margin:0;max-width:90ch}
+.lic-in .ico-lg{width:34px;height:34px;flex:none}
+.lic-f{display:flex;gap:8px;font-size:.88rem;line-height:1.5}
+.lic-f .ico{color:var(--accent);margin-top:.2em}
+.lic-dl{display:grid;grid-template-columns:max-content 1fr;gap:8px 20px;margin:20px 0 0;background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:20px 24px}
+.lic-dl dt{font-weight:700}.lic-dl dd{margin:0;font-variant-numeric:tabular-nums}
+@media (max-width:480px){.lic-dl{grid-template-columns:1fr}.lic-dl dd{margin-bottom:8px}}
 .nav{list-style:none;display:flex;align-items:center;gap:4px;margin:0;padding:0}
 .nav>li>a{color:var(--on-dark);text-decoration:none;font:600 .95rem var(--body);padding:10px 10px;display:inline-block;border-radius:6px}
 .nav>li>a:hover{color:#fff;background:var(--ink-3)}
@@ -136,3 +149,8 @@ h1,h2,h3,.h2,.h3{font-family:var(--display);line-height:1.1;text-wrap:balance;ma
 .site-f a{color:var(--on-dark-2);text-decoration:none}.site-f a:hover{color:#fff}
 .legal{border-top:1px solid #23262c;margin-top:36px;padding-top:18px;font-size:.85rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.prods{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.prod{background:var(--white);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:var(--r);padding:22px 24px}
+.prod h3{margin:0}.prod .by{margin:2px 0 10px;color:var(--muted);font-size:.92rem;text-transform:uppercase;letter-spacing:.08em}
+.prod p{margin:0 0 .4em}
