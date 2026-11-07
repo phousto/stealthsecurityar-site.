@@ -154,3 +154,5 @@ h1,h2,h3,.h2,.h3{font-family:var(--display);line-height:1.1;text-wrap:balance;ma
 .prod{background:var(--white);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:var(--r);padding:22px 24px}
 .prod h3{margin:0}.prod .by{margin:2px 0 10px;color:var(--muted);font-size:.92rem;text-transform:uppercase;letter-spacing:.08em}
 .prod p{margin:0 0 .4em}
+.feat-sec{background:var(--white);border-block:1px solid var(--line)}
+.lead-d{font-size:1.15rem;color:var(--muted);max-width:52ch;margin:0 0 22px}
