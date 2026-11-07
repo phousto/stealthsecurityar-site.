@@ -155,6 +155,9 @@ def build():
         c, ld = crumbs([("Home", "/"), ("Services", "/services"), (s["short"], None)])
         groups = "".join(f'<div class="group"><h3>{E(h)}</h3>{ul(items)}</div>' for h, items in s["groups"])
         brands = (f'<div class="brands"><h2 class="h3">Supported manufacturers and platforms</h2><p>' + " · ".join(E(b) for b in s["brands"]) + "</p></div>") if s["brands"] else ""
+        f = s.get("feature")
+        feat = (f'<section class="sec feat-sec"><div class="wrap split"><div><p class="eyebrow">{E(f["eyebrow"])}</p><h2 class="h2">{E(f["title"])}</h2>'
+                f'<p class="lead-d">{E(f["lead"])}</p><a class="btn" href="/contact">{E(f["cta"])}</a></div>{ul(f["points"])}</div></section>') if f else ""
         prods = ""
         if s.get("products"):
             prods = ('<section class="sec"><div class="wrap"><p class="eyebrow">What we install</p><h2 class="h2">Products we work with</h2><div class="prods">'
@@ -170,6 +173,7 @@ def build():
 <section class="sec"><div class="wrap narrow prose">{prose}{pricing_link}</div></section>
 <section class="sec alt"><div class="wrap"><div class="groups">{groups}</div>{brands}</div></section>
 {license_strip() if s["slug"] != "managed-it" else ""}
+{feat}
 {prods}
 <section class="sec"><div class="wrap"><h2 class="h2">Other services</h2>{svc_cards(others)}</div></section>
 {cta_band(s['cta'].capitalize() + ".")}"""
