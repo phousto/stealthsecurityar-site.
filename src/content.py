@@ -1,0 +1,173 @@
+# Site content for stealthsecurityar.com. Edit text here, then run build.py.
+# Facts kept to what Stealth Security publishes today; nothing invented
+# (no license numbers, client names, reviews or response-time promises).
+
+SITE = dict(
+    name="Stealth Security",
+    legal="Stealth Security, LLC",
+    url="https://stealthsecurityar.com",
+    phone_display="1-479-746-8298",
+    phone_tel="+14797468298",
+    email="support@stealthsecurityar.com",
+    city="Clarksville", region="AR",
+    facebook="https://www.facebook.com/185744284629912",
+    tagline="Arkansas-based security, fire alarm, surveillance and managed IT.",
+)
+
+SERVICES = [
+  dict(slug="fire-alarm", short="Fire Alarm Systems", icon="flame",
+    title="Commercial Fire Alarm Systems",
+    meta="Fire alarm installation, inspection, testing, monitoring and repair for Arkansas businesses. Fire-Lite, Honeywell, Silent Knight, Bosch and Napco.",
+    card="Code-compliant fire alarm design, installation, inspections, testing, monitoring and service.",
+    lead="Stealth Security installs, inspects, tests, monitors, programs and repairs commercial fire alarm systems throughout Arkansas.",
+    body=[
+      "A fire alarm system only protects a building if it works on the day it is needed and passes inspection the rest of the year. We design systems to NFPA 72 and the Arkansas Fire Prevention Code, document every inspection, and keep the paperwork ready for your fire marshal and insurance carrier.",
+      "Whether you are opening a new building, finishing out a tenant space or replacing an aging panel, we handle the system from layout through final acceptance testing, then stay on as your service and monitoring provider.",
+    ],
+    groups=[
+      ("Installation", ["New construction", "Tenant finish-outs", "Building expansions", "System upgrades and panel replacements"]),
+      ("Inspection and testing", ["Annual inspections", "Semi-annual testing", "Compliance documentation", "Deficiency correction"]),
+      ("Monitoring", ["24/7 central station monitoring", "Emergency dispatch", "Trouble and supervisory alerts"]),
+      ("Service and repair", ["Troubleshooting", "Device replacement", "Panel programming"]),
+    ],
+    brands=["Fire-Lite", "Honeywell", "Silent Knight", "Bosch", "Napco"],
+    cta="Schedule fire alarm service"),
+  dict(slug="security-systems", short="Security Systems", icon="shield",
+    title="Smart Security Systems",
+    meta="Residential and commercial intrusion alarm systems with mobile app control and professional monitoring across Arkansas.",
+    card="Residential and commercial intrusion alarms with mobile app control and professional monitoring.",
+    lead="Protect your family, employees, inventory and property with a professionally installed alarm system you can control from your phone.",
+    body=[
+      "We install intrusion alarm systems for homes, shops, offices and warehouses: door and window sensors, motion detection, glass-break sensors and keypads, all tied to an app so you can arm, disarm and check status from anywhere.",
+      "Every system can be professionally monitored, so a real alarm reaches a person who can dispatch help, not just a notification you might miss.",
+    ],
+    groups=[
+      ("Systems", ["Commercial intrusion alarms", "Home security systems", "Door, window and motion sensors", "Glass-break detection"]),
+      ("Control", ["Mobile app arming and disarming", "User codes and schedules", "Real-time alerts"]),
+      ("Monitoring", ["Professional 24/7 monitoring", "Emergency dispatch"]),
+    ],
+    brands=[], cta="Get a security system quote"),
+  dict(slug="cctv-surveillance", short="CCTV & Surveillance", icon="camera",
+    title="Commercial Camera Systems",
+    meta="Commercial CCTV and surveillance camera systems in Arkansas with AI video analytics, remote viewing and license plate recognition.",
+    card="Camera systems with AI detection, remote viewing and license plate recognition.",
+    lead="Modern surveillance systems that improve security, accountability and visibility across one site or many.",
+    body=[
+      "Today's IP camera systems do far more than record. AI analytics can tell a person from a passing car, alert you to activity after hours, and let you find an event in seconds instead of scrubbing through hours of footage.",
+      "We plan camera placement around what you actually need to see, from entrances and registers to parking lots, loading docks and job sites, and set up secure remote viewing on your phone and computer.",
+    ],
+    groups=[
+      ("Camera solutions", ["Commercial surveillance", "AI video analytics", "Remote viewing", "Multi-location monitoring"]),
+      ("Specialty systems", ["License plate recognition", "Warehouse monitoring", "Parking lot surveillance", "Construction site cameras"]),
+    ],
+    brands=["Uniview", "Reolink", "Professional IP systems"],
+    cta="Get a camera system estimate"),
+  dict(slug="access-control", short="Access Control", icon="key",
+    title="Access Control Solutions",
+    meta="Card, key fob and mobile access control systems for Arkansas businesses. Control who enters your building and when.",
+    card="Control who enters your building while improving security and accountability.",
+    lead="Control who enters your building and when, and know who came and went.",
+    body=[
+      "Access control replaces keys you can't track with credentials you can issue, schedule and revoke in seconds. When an employee leaves, you turn off their card instead of rekeying the building.",
+      "We install systems from a single door to multi-building campuses, with door schedules, audit logs and remote management.",
+    ],
+    groups=[
+      ("Solutions", ["Card access systems", "Key fob credentials", "Mobile credentials", "Electronic locks", "Multi-door systems"]),
+      ("Benefits", ["Employee accountability", "Remote management", "Door schedules", "Entry audit logs"]),
+    ],
+    brands=[], cta="Get an access control quote"),
+  dict(slug="managed-it", short="Managed IT Services", icon="server",
+    title="Managed IT Services for Arkansas Businesses",
+    meta="Managed IT for Arkansas businesses: monitoring, patching, help desk, Microsoft 365, networking and cybersecurity from a local provider.",
+    card="Proactive support, cybersecurity, Microsoft 365 management and network solutions.",
+    lead="Reduce downtime and improve cybersecurity with proactive IT management from a local team.",
+    body=[
+      "Managed IT means we watch your computers, servers and network before something breaks: installing updates, keeping antivirus current and fixing problems remotely, often before your staff notices.",
+      "Because we also install your cameras, alarms and access control, you have one local company accountable for the technology that keeps your business running and secure.",
+    ],
+    groups=[
+      ("Managed services", ["Remote monitoring", "Patch management", "Antivirus management", "Help desk support"]),
+      ("Microsoft 365", ["Exchange", "Teams", "SharePoint", "OneDrive", "Copilot"]),
+      ("Network services", ["Firewalls", "Switching", "Wireless networks", "VPNs"]),
+      ("Cybersecurity", ["Endpoint protection", "Email security", "Backups", "Security awareness"]),
+    ],
+    brands=[], cta="Schedule a free IT assessment"),
+]
+
+PRICING = [
+  dict(name="Essentials", price="$99", unit="per device / month", featured=False,
+       intro="", items=["Monitoring", "Patch management", "Antivirus management", "Asset tracking"],
+       best="Small offices, retail"),
+  dict(name="Business", price="$149", unit="per device / month", featured=True,
+       intro="Everything in Essentials, plus:", items=["Help desk support", "Microsoft 365 support", "Vendor coordination", "Security monitoring"],
+       best="Growing businesses"),
+  dict(name="Complete", price="Custom", unit="pricing", featured=False,
+       intro="Everything in Business, plus:", items=["Backup and disaster recovery", "Compliance support", "Cybersecurity management", "Strategic IT planning", "Co-managed IT"],
+       best="Healthcare, multi-site organizations, larger businesses"),
+]
+
+INDUSTRIES = [
+  dict(slug="healthcare", name="Healthcare & Clinics",
+    meta="Security, access control, cameras and compliance-minded managed IT for Arkansas clinics and healthcare offices.",
+    lead="Clinics and medical offices need protected records, controlled access to back-of-house areas, and systems that stay up during patient hours.",
+    needs=["Access control for medication rooms and records areas", "Camera coverage of entrances and parking", "Fire alarm inspection documentation", "Backups, email security and compliance support"]),
+  dict(slug="schools-nonprofits", name="Schools, Churches & Nonprofits",
+    meta="Fire alarm, access control, cameras and IT for Arkansas schools, churches and nonprofit organizations.",
+    lead="Organizations that serve the public need safe buildings and dependable technology on a careful budget.",
+    needs=["Door schedules that lock and unlock automatically", "Fire alarm testing and inspections", "Cameras for entrances, hallways and parking lots", "Managed IT and network support for staff and classrooms"]),
+  dict(slug="retail-restaurants", name="Retail & Restaurants",
+    meta="Cameras, alarms and IT for Arkansas retail stores and restaurants, with remote viewing from your phone.",
+    lead="Shrink, after-hours break-ins and a point-of-sale outage all cost money. The right systems prevent most of it.",
+    needs=["Cameras over registers, entrances and stock rooms", "Intrusion alarms with mobile app control", "Reliable networks and Wi-Fi for point of sale", "Fire alarm service and inspections"]),
+  dict(slug="industrial-construction", name="Industrial, Warehouse & Construction",
+    meta="Warehouse cameras, license plate recognition, construction site cameras and access control across Arkansas.",
+    lead="Large sites, high-value equipment and materials, and trucks coming and going need more than a few cameras.",
+    needs=["Warehouse and yard surveillance", "License plate recognition at gates", "Temporary construction site cameras", "Access control for multiple buildings"]),
+  dict(slug="offices-professional", name="Offices & Professional Services",
+    meta="Managed IT, Microsoft 365, cybersecurity and building security for Arkansas offices and professional firms.",
+    lead="Your team runs on email, files and a network that has to work every morning.",
+    needs=["Managed IT and help desk", "Microsoft 365 setup and management", "Cybersecurity and backups", "Access control and alarms for after hours"]),
+]
+
+TOWNS = [
+  dict(slug="clarksville", name="Clarksville", area="Clarksville and Johnson County",
+    meta="Security systems, fire alarms, cameras, access control and managed IT in Clarksville, AR, from a company based here.",
+    paras=[
+      "Clarksville is home base for Stealth Security. We live and work in Johnson County, so when a business on Main Street, a shop out on the highway or a family home in town needs a security system or an IT fix, the company you call is local.",
+      "We install and service fire alarm systems for Clarksville businesses, schools and organizations, including inspections and the documentation your fire marshal and insurer ask for. We also set up camera systems, intrusion alarms and access control, and provide managed IT and Microsoft 365 support for local offices.",
+      "Being nearby means site visits, estimates and service calls without waiting on a national company to send someone from out of town.",
+    ],
+    nearby="Lamar, Coal Hill, Hartman, Knoxville, London and the rest of Johnson County"),
+  dict(slug="russellville", name="Russellville", area="Russellville and Pope County",
+    meta="Fire alarm, security, camera, access control and managed IT services for Russellville, AR businesses and homes.",
+    paras=[
+      "Russellville is just down I-40 from our Clarksville base, and businesses across Pope County rely on Stealth Security for fire alarm, security and IT work.",
+      "From retail and restaurants along the main corridors to offices, clinics and industrial sites, we design camera systems, intrusion alarms and access control around how each building is actually used. Our fire alarm team handles installation, inspection, testing and repair, and our managed IT service keeps computers, networks and Microsoft 365 running.",
+      "Because security and IT are handled by one local company, there is one number to call and one team accountable for the whole system.",
+    ],
+    nearby="Dover, Atkins, Pottsville, London and Pope County"),
+  dict(slug="ozark", name="Ozark", area="Ozark and Franklin County",
+    meta="Security systems, fire alarms, cameras and managed IT for Ozark, AR and Franklin County.",
+    paras=[
+      "Stealth Security serves Ozark and Franklin County from our home base in neighboring Johnson County.",
+      "We install and service fire alarm systems, intrusion alarms, surveillance cameras and access control for businesses, schools, churches and homes in the Ozark area, and provide managed IT support for local offices that need dependable computers, networks and email.",
+      "Whether you need a single camera system for a shop or fire alarm inspections for a larger building, we can come out, look at the site and give you a clear quote.",
+    ],
+    nearby="Altus, Charleston, Mulberry and Franklin County"),
+  dict(slug="fort-smith", name="Fort Smith", area="Fort Smith and the River Valley",
+    meta="Commercial fire alarm, security cameras, access control and managed IT services in Fort Smith, AR.",
+    paras=[
+      "Stealth Security works with businesses in Fort Smith and across the western River Valley on fire alarm, security, surveillance and IT projects.",
+      "Fort Smith's warehouses, manufacturers, offices and retail centers often need more than a basic alarm: multi-camera systems with AI analytics, license plate recognition at gates, access control across several doors or buildings, and fire alarm systems that pass inspection year after year. We design, install and support all of it.",
+      "Our managed IT plans give Fort Smith offices proactive monitoring, patching, help desk and cybersecurity at a predictable monthly price per device.",
+    ],
+    nearby="Van Buren, Alma, Greenwood, Barling and Sebastian and Crawford Counties"),
+  dict(slug="northwest-arkansas", name="Northwest Arkansas", area="Northwest Arkansas",
+    meta="Security, fire alarm, surveillance camera, access control and managed IT services for Northwest Arkansas businesses.",
+    paras=[
+      "Stealth Security takes on fire alarm, security, surveillance and IT projects for businesses in Northwest Arkansas.",
+      "Growing companies in the region need systems that scale: camera platforms that cover several locations from one app, access control that grows with new hires and new doors, and IT support that keeps a busy office moving. We plan for that from the first estimate.",
+      "Call or request a quote to talk through your project and schedule a site visit.",
+    ],
+    nearby="Fayetteville, Springdale, Rogers, Bentonville and surrounding communities"),
+]
