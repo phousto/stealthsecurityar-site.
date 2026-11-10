@@ -6,6 +6,7 @@ SITE = dict(
     name="Stealth Security",
     legal="Stealth Security, LLC",
     url="https://stealthsecurityar.com",
+    app_url="https://app.stealthsecurityar.com",
     phone_display="1-479-746-8298",
     phone_tel="+14797468298",
     email="support@stealthsecurityar.com",

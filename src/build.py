@@ -18,6 +18,7 @@ ICONS = {
  "check": '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
  "phone": '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/>',
  "mail": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+ "user": '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
  "pin": '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
 }
 def icon(name, cls="ico"):
@@ -27,13 +28,16 @@ def nav():
     svc = "".join(f'<li><a href="/services/{s["slug"]}">{E(s["short"])}</a></li>' for s in SERVICES)
     ind = "".join(f'<li><a href="/industries/{i["slug"]}">{E(i["name"])}</a></li>' for i in INDUSTRIES)
     towns = "".join(f'<li><a href="/service-areas/{t["slug"]}">{E(t["name"])}</a></li>' for t in TOWNS)
+    login = (f'<li><a href="{SITE["app_url"]}/">Employee login</a></li>'
+             f'<li><a href="{SITE["app_url"]}/p/">Customer IT Help</a></li>'
+             f'<li><a href="{SITE["app_url"]}/p/approve">Approve IT requests</a></li>')
     def dd(label, href, items):
         return (f'<li class="dd"><a href="{href}">{label}</a>'
                 f'<button class="dd-t" aria-expanded="false" aria-label="Show {label} menu">'
                 f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg></button>'
                 f'<ul class="dd-m">{items}</ul></li>')
     return f"""<header class="site-h">
-<div class="topbar"><div class="wrap"><a href="tel:{SITE['phone_tel']}">{icon('phone')}{SITE['phone_display']}</a><a href="mailto:{SITE['email']}">{icon('mail')}{SITE['email']}</a></div></div>
+<div class="topbar"><div class="wrap"><a href="tel:{SITE['phone_tel']}">{icon('phone')}{SITE['phone_display']}</a><a href="mailto:{SITE['email']}">{icon('mail')}{SITE['email']}</a><a class="tb-login" href="{SITE['app_url']}/">{icon('user')}Login</a></div></div>
 <div class="wrap navrow">
 <a class="brand" href="/" aria-label="Stealth Security home"><img class="mark" src="/assets/mark-light.png" alt="" width="34" height="42"><span class="word"><span class="w1">Stealth</span><span class="w2">Security</span></span></a>
 <button class="menu-t" aria-expanded="false" aria-controls="mainnav">Menu</button>
@@ -44,6 +48,7 @@ def nav():
 {dd('Industries','/industries',ind)}
 {dd('Service Areas','/service-areas',towns)}
 <li><a href="/about">About</a></li>
+{dd('Login', SITE['app_url'] + '/', login)}
 <li><a class="btn btn-sm" href="/contact">Get a Quote</a></li>
 </ul></nav></div></header>"""
 
@@ -55,7 +60,7 @@ def footer():
 <p><a href="tel:{SITE['phone_tel']}">{SITE['phone_display']}</a><br><a href="mailto:{SITE['email']}">{SITE['email']}</a><br>{SITE['city']}, Arkansas</p>
 <p><a href="{SITE['facebook']}" rel="noopener">Facebook</a></p></div>
 <div><h2>Services</h2><ul>{svc}</ul></div>
-<div><h2>Company</h2><ul><li><a href="/about">About</a></li><li><a href="/managed-it-pricing">IT Pricing</a></li><li><a href="/industries">Industries</a></li><li><a href="/contact">Contact</a></li></ul></div>
+<div><h2>Company</h2><ul><li><a href="{SITE['app_url']}/">Employee login</a></li><li><a href="{SITE['app_url']}/p/">Customer IT Help</a></li><li><a href="/about">About</a></li><li><a href="/managed-it-pricing">IT Pricing</a></li><li><a href="/industries">Industries</a></li><li><a href="/contact">Contact</a></li></ul></div>
 <div><h2>Service Areas</h2><ul>{towns}</ul></div>
 </div><div class="wrap legal">© {date.today().year} {E(SITE['legal'])}. All rights reserved.</div></footer>"""
 
