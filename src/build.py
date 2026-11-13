@@ -1,6 +1,8 @@
 """Build stealthsecurityar.com into ../public. Run: python3 src/build.py"""
 import json, os, shutil, html
 from datetime import date
+import hashlib, pathlib
+CSS_V = hashlib.md5(pathlib.Path(__file__).with_name('assets').joinpath('site.css').read_bytes()).hexdigest()[:8]
 from content import SITE, SERVICES, PRICING, PRICING_NOTES, ADDONS, ADDON_NOTES, INDUSTRIES, TOWNS
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -109,7 +111,7 @@ def page(path, title, desc, body, ld=None):
 <meta name="theme-color" content="#16181c"><link rel="icon" href="/assets/favicon-48.png" type="image/png"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><meta property="og:image" content="{SITE['url']}/assets/logo-dark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Jost:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css">{lds}</head>
+<link rel="stylesheet" href="/assets/site.css?v={CSS_V}">{lds}</head>
 <body><a class="skip" href="#main">Skip to content</a>{nav()}<main id="main">{body}</main>{footer()}<script src="/assets/site.js" defer></script></body></html>"""
     d = os.path.join(OUT, path.strip("/"))
     os.makedirs(d, exist_ok=True)
@@ -192,7 +194,7 @@ def build():
 <p class="best"><b>Best for:</b> {E(p['best'])}</p><a class="btn{'' if p['featured'] else ' btn-ghost-dark'}" href="/contact">Get started</a></div>""" for p in PRICING)
     addons = "".join(f"""<div class="addon"><h3 class="h3">{E(a['group'])}</h3><p>{E(a['lead'])}</p>
 <div class="ptable-wrap"><table class="ptable"><thead><tr><th scope="col">Service</th><th scope="col">Standard</th><th scope="col">Schools &amp; nonprofits</th></tr></thead><tbody>
-{"".join(f'<tr><th scope="row">{E(r[0])}<span>{E(r[1])}</span></th><td>{E(r[2])}</td><td class="edu">{E(r[3])}</td></tr>' for r in a['rows'])}
+{"".join(f'<tr><th scope="row">{E(r[0])}<br><span>{E(r[1])}</span></th><td>{E(r[2])}</td><td class="edu">{E(r[3])}</td></tr>' for r in a['rows'])}
 </tbody></table></div></div>""" for a in ADDONS)
     page("/managed-it-pricing", "Managed IT Pricing | Stealth Security Arkansas",
          "Managed IT for Arkansas businesses from $55 per device per month, with Malwarebytes and offsite backup included. Help desk plans from $125 per user.",
