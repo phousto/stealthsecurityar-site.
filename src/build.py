@@ -21,6 +21,7 @@ ICONS = {
  "phone": '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/>',
  "mail": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
  "user": '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+ "wifi": '<path d="M2.5 9a14 14 0 0 1 19 0"/><path d="M5.5 12.5a9.5 9.5 0 0 1 13 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.2" r="1.1"/>',
  "pin": '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
 }
 def icon(name, cls="ico"):
@@ -165,6 +166,14 @@ def build():
         f = s.get("feature")
         feat = (f'<section class="sec feat-sec"><div class="wrap split"><div><p class="eyebrow">{E(f["eyebrow"])}</p><h2 class="h2">{E(f["title"])}</h2>'
                 f'<p class="lead-d">{E(f["lead"])}</p><a class="btn" href="/contact">{E(f["cta"])}</a></div>{ul(f["points"])}</div></section>') if f else ""
+        pk = s.get("packages")
+        pkgs = ""
+        if pk:
+            pt = "".join(f"""<div class="tier{' feat' if q.get('featured') else ''}">{'<p class="flag">Most popular</p>' if q.get('featured') else ''}
+<h3 class="h3">{E(q['name'])}</h3><p class="price pk-size">{E(q['size'])}</p>{ul(q['items'])}
+<p class="best"><b>Best for:</b> {E(q['best'])}</p><a class="btn{'' if q.get('featured') else ' btn-ghost-dark'}" href="/contact">{E(pk['cta'])}</a></div>""" for q in pk["tiers"])
+            pkgs = (f'<section class="sec alt"><div class="wrap"><p class="eyebrow">{E(pk["eyebrow"])}</p><h2 class="h2">{E(pk["title"])}</h2>'
+                    f'<p class="lead-sm">{E(pk["lead"])}</p><div class="tiers pk-tiers">{pt}</div></div></section>')
         prods = ""
         if s.get("products"):
             prods = ('<section class="sec"><div class="wrap"><p class="eyebrow">What we install</p><h2 class="h2">Products we work with</h2><div class="prods">'
@@ -179,11 +188,12 @@ def build():
         body = hero(s["short"], s["title"], s["lead"], c) + f"""
 <section class="sec"><div class="wrap narrow prose">{prose}{pricing_link}</div></section>
 <section class="sec alt"><div class="wrap"><div class="groups">{groups}</div>{brands}</div></section>
-{license_strip() if s["slug"] != "managed-it" else ""}
+{license_strip() if s["slug"] not in ("managed-it", "wifi-networking") else ""}
+{pkgs}
 {feat}
 {prods}
 <section class="sec"><div class="wrap"><h2 class="h2">Other services</h2>{svc_cards(others)}</div></section>
-{cta_band(s['cta'].capitalize() + ".")}"""
+{cta_band(s['cta'][:1].upper() + s['cta'][1:] + ".")}"""
         page(f"/services/{s['slug']}", f"{s['title']} | Stealth Security Arkansas", s["meta"], body, [ld, svc_ld])
 
     # Pricing

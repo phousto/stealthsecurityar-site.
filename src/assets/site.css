@@ -170,3 +170,6 @@ h1,h2,h3,.h2,.h3{font-family:var(--display);line-height:1.1;text-wrap:balance;ma
 .ptable tbody th span{display:block;font-weight:400;font-size:.88rem;color:var(--muted)}
 .ptable td{font-weight:700;font-size:1.15rem;white-space:nowrap}
 .ptable td.edu{color:var(--accent-d)}
+/* service packages */
+.pk-tiers{margin-top:28px}
+.price.pk-size{font-size:1.05rem;font-weight:600;color:var(--muted)}
