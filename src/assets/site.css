@@ -157,3 +157,16 @@ h1,h2,h3,.h2,.h3{font-family:var(--display);line-height:1.1;text-wrap:balance;ma
 .feat-sec{background:var(--white);border-block:1px solid var(--line)}
 .lead-d{font-size:1.15rem;color:var(--muted);max-width:52ch;margin:0 0 22px}
 .pnotes{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:10px}.pnotes li{display:flex;gap:10px}.pnotes .ico{color:var(--accent);margin-top:.25em}
+/* add-on price tables */
+.lead-sm{color:var(--muted);max-width:62ch;margin:.4rem 0 0}
+.addons{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:28px}
+@media (max-width:900px){.addons{grid-template-columns:1fr}}
+.addon h3{margin:0 0 .3rem} .addon>p{margin:0 0 14px;color:var(--muted)}
+.ptable-wrap{overflow-x:auto}
+.ptable{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--line)}
+.ptable th,.ptable td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ptable thead th{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ptable tbody th{font-weight:600}
+.ptable tbody th span{display:block;font-weight:400;font-size:.88rem;color:var(--muted)}
+.ptable td{font-weight:700;font-size:1.15rem;white-space:nowrap}
+.ptable td.edu{color:var(--accent-d)}

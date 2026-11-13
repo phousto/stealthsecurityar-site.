@@ -167,6 +167,28 @@ PRICING_NOTES = [
   "Every plan starts with a free IT assessment, so you know exactly what you'll pay before you sign.",
 ]
 
+# Stand-alone services for organizations that don't need a full managed plan.
+# Columns: service, unit, standard price, schools/churches/nonprofits price
+ADDONS = [
+  dict(group="Malwarebytes (ThreatDown) endpoint detection and response",
+       lead="Malwarebytes on each computer, with Stealth Security watching its alerts and cleaning up threats.",
+       rows=[
+         ("Workstation or laptop", "per device / month", "$5", "$3"),
+         ("Server", "per server / month", "$10", "$6"),
+       ]),
+  dict(group="Offsite cloud backup",
+       lead="Encrypted nightly backups to the cloud, so a failed server or PC can be restored to new hardware.",
+       rows=[
+         ("Server, or virtual host (covers all of its VMs)", "per month, 500 GB included", "$99", "$79"),
+         ("Workstation or laptop", "per device / month", "$12", "$10"),
+         ("Additional storage", "per TB / month", "$75", "$60"),
+       ]),
+]
+ADDON_NOTES = [
+  "Schools, churches and nonprofits pay the reduced rate. Annual billing is available to match your budget year.",
+  "Both services are already included in the Essentials, Business and Complete plans above.",
+]
+
 
 INDUSTRIES = [
   dict(slug="healthcare", name="Healthcare & Clinics",

@@ -1,7 +1,7 @@
 """Build stealthsecurityar.com into ../public. Run: python3 src/build.py"""
 import json, os, shutil, html
 from datetime import date
-from content import SITE, SERVICES, PRICING, PRICING_NOTES, INDUSTRIES, TOWNS
+from content import SITE, SERVICES, PRICING, PRICING_NOTES, ADDONS, ADDON_NOTES, INDUSTRIES, TOWNS
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "public")
@@ -190,10 +190,15 @@ def build():
 <h2 class="h3">{E(p['name'])}</h2><p class="price">{E(p['price'])} <span>{E(p['unit'])}</span></p>
 {f'<p class="intro">{E(p["intro"])}</p>' if p['intro'] else ''}{ul(p['items'])}
 <p class="best"><b>Best for:</b> {E(p['best'])}</p><a class="btn{'' if p['featured'] else ' btn-ghost-dark'}" href="/contact">Get started</a></div>""" for p in PRICING)
+    addons = "".join(f"""<div class="addon"><h3 class="h3">{E(a['group'])}</h3><p>{E(a['lead'])}</p>
+<div class="ptable-wrap"><table class="ptable"><thead><tr><th scope="col">Service</th><th scope="col">Standard</th><th scope="col">Schools &amp; nonprofits</th></tr></thead><tbody>
+{"".join(f'<tr><th scope="row">{E(r[0])}<span>{E(r[1])}</span></th><td>{E(r[2])}</td><td class="edu">{E(r[3])}</td></tr>' for r in a['rows'])}
+</tbody></table></div></div>""" for a in ADDONS)
     page("/managed-it-pricing", "Managed IT Pricing | Stealth Security Arkansas",
          "Managed IT for Arkansas businesses from $55 per device per month, with Malwarebytes and offsite backup included. Help desk plans from $125 per user.",
          hero("Managed IT", "Managed IT pricing", "Predictable monthly support, priced per device.", c, buttons=False)
          + f'<section class="sec"><div class="wrap"><div class="tiers">{tiers}</div><ul class="pnotes">{"".join(f"<li>{icon('check')}{E(n)}</li>" for n in PRICING_NOTES)}</ul></div></section>'
+         + f'<section class="sec alt" id="add-ons"><div class="wrap"><h2>Malwarebytes and offsite backup on their own</h2><p class="lead-sm">Already have IT staff? Add our endpoint protection or cloud backup without a full managed plan.</p><div class="addons">{addons}</div><ul class="pnotes">{"".join(f"<li>{icon('check')}{E(n)}</li>" for n in ADDON_NOTES)}</ul></div></section>'
          + cta_band("Schedule a free IT assessment."), [ld])
 
     # About
