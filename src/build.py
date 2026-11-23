@@ -33,14 +33,15 @@ def nav():
     towns = "".join(f'<li><a href="/service-areas/{t["slug"]}">{E(t["name"])}</a></li>' for t in TOWNS)
     login = (f'<li><a href="{SITE["app_url"]}/">Employee login</a></li>'
              f'<li><a href="{SITE["app_url"]}/p/">Customer IT Help</a></li>'
-             f'<li><a href="{SITE["app_url"]}/p/approve">Approve IT requests</a></li>')
+             f'<li><a href="{SITE["app_url"]}/p/approve">Approve IT requests</a></li>'
+             f'<li><a href="{SITE["app_url"]}/kb">Help Center</a></li>')
     def dd(label, href, items):
         return (f'<li class="dd"><a href="{href}">{label}</a>'
                 f'<button class="dd-t" aria-expanded="false" aria-label="Show {label} menu">'
                 f'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg></button>'
                 f'<ul class="dd-m">{items}</ul></li>')
     return f"""<header class="site-h">
-<div class="topbar"><div class="wrap"><a href="tel:{SITE['phone_tel']}">{icon('phone')}{SITE['phone_display']}</a><a href="mailto:{SITE['email']}">{icon('mail')}{SITE['email']}</a><a class="tb-login" href="{SITE['app_url']}/">{icon('user')}Login</a></div></div>
+<div class="topbar"><div class="wrap"><a href="tel:{SITE['phone_tel']}">{icon('phone')}{SITE['phone_display']}</a><a href="mailto:{SITE['email']}">{icon('mail')}{SITE['email']}</a><a href="{SITE['app_url']}/kb">Help Center</a><a class="tb-login" href="{SITE['app_url']}/">{icon('user')}Login</a></div></div>
 <div class="wrap navrow">
 <a class="brand" href="/" aria-label="Stealth Security home"><img class="mark" src="/assets/mark-light.png" alt="" width="34" height="42"><span class="word"><span class="w1">Stealth</span><span class="w2">Security</span></span></a>
 <button class="menu-t" aria-expanded="false" aria-controls="mainnav">Menu</button>
@@ -63,7 +64,7 @@ def footer():
 <p><a href="tel:{SITE['phone_tel']}">{SITE['phone_display']}</a><br><a href="mailto:{SITE['email']}">{SITE['email']}</a><br>{SITE['city']}, Arkansas</p>
 <p><a href="{SITE['facebook']}" rel="noopener">Facebook</a></p></div>
 <div><h2>Services</h2><ul>{svc}</ul></div>
-<div><h2>Company</h2><ul><li><a href="{SITE['app_url']}/">Employee login</a></li><li><a href="{SITE['app_url']}/p/">Customer IT Help</a></li><li><a href="/about">About</a></li><li><a href="/managed-it-pricing">IT Pricing</a></li><li><a href="/managed-wifi-pricing">Wi-Fi Pricing</a></li><li><a href="/industries">Industries</a></li><li><a href="/contact">Contact</a></li></ul></div>
+<div><h2>Company</h2><ul><li><a href="{SITE['app_url']}/">Employee login</a></li><li><a href="{SITE['app_url']}/p/">Customer IT Help</a></li><li><a href="{SITE['app_url']}/kb">Help Center</a></li><li><a href="/about">About</a></li><li><a href="/managed-it-pricing">IT Pricing</a></li><li><a href="/managed-wifi-pricing">Wi-Fi Pricing</a></li><li><a href="/industries">Industries</a></li><li><a href="/contact">Contact</a></li></ul></div>
 <div><h2>Service Areas</h2><ul>{towns}</ul></div>
 </div><div class="wrap legal">© {date.today().year} {E(SITE['legal'])}. All rights reserved.</div></footer>"""
 
