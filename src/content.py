@@ -312,3 +312,65 @@ TOWNS = [
     ],
     nearby="Fayetteville, Springdale, Rogers, Bentonville and surrounding communities"),
 ]
+
+# ---------------------------------------------------------------- Managed Wi-Fi pricing (approved Nov 23, 2026)
+# own: customer buys the equipment (equip + setup one time, then monthly). lease: Stealth Security owns it
+# (setup one time, then monthly, 24-month agreement). Prices exclude internet service and sales tax on equipment.
+WIFI = dict(
+  term_months=24,
+  plans={
+    "home": [
+      dict(id="home-basic", name="Home Basic", size="Apartments and homes up to about 1,500 sq ft",
+           items=["UniFi Express 7: router and Wi-Fi 7 in one", "Separate guest Wi-Fi", "Set up on the UniFi app for you"],
+           own=dict(equip=249, setup=149, monthly=15), lease=dict(setup=99, monthly=29)),
+      dict(id="home-plus", name="Home Plus", size="Homes about 2,000 to 3,500 sq ft", featured=True,
+           items=["UniFi Cloud Gateway Max", "2 ceiling Wi-Fi 7 access points (U7 Pro)", "8-port PoE switch", "Up to 2 cable runs"],
+           own=dict(equip=899, setup=399, monthly=25), lease=dict(setup=199, monthly=65)),
+      dict(id="home-premium", name="Home Premium", size="Large homes, shops and patios",
+           items=["UniFi Cloud Gateway Max", "3 ceiling Wi-Fi 7 access points", "1 outdoor access point", "PoE switch, up to 4 cable runs"],
+           own=dict(equip=1399, setup=599, monthly=35), lease=dict(setup=299, monthly=99)),
+    ],
+    "business": [
+      dict(id="biz-starter", name="Business Starter", size="One floor, up to about 10 staff",
+           items=["UniFi Cloud Gateway Max with firewall", "2 Wi-Fi 7 access points (U7 Pro)", "8-port PoE switch",
+                  "Staff, guest and device networks kept apart", "Guest splash page with your logo and terms"],
+           own=dict(equip=899, setup=599, monthly=59), lease=dict(setup=299, monthly=109)),
+      dict(id="biz-standard", name="Business Standard", size="About 3,000 to 6,000 sq ft, about 25 staff", featured=True,
+           items=["UniFi Cloud Gateway Fiber (10G)", "4 Wi-Fi 7 access points", "16-port PoE switch",
+                  "Staff, guest and device networks kept apart", "Guest splash page with your logo and terms"],
+           own=dict(equip=1599, setup=999, monthly=99), lease=dict(setup=499, monthly=179)),
+      dict(id="biz-pro", name="Business Pro", size="Several areas, warehouses, outdoor coverage", quote=True,
+           items=["UniFi Dream Machine Pro", "6 or more access points, indoor and outdoor", "Building-to-building links if needed",
+                  "Everything in Business Standard"],
+           own=dict(equip=2499, setup=0, monthly=149), lease=None),
+    ],
+  },
+  # kind: qty (several allowed) | check (on or off). For: home, business or both. Business plans include some.
+  addons=[
+    dict(id="ap", name="Extra indoor access point", note="U7 Pro, with one cable run up to 150 ft", kind="qty",
+         own=dict(once=399, monthly=0), lease=dict(once=99, monthly=15)),
+    dict(id="outdoor", name="Outdoor access point", note="U7 Outdoor for yards, lots and patios", kind="qty",
+         own=dict(once=449, monthly=0), lease=dict(once=149, monthly=15)),
+    dict(id="mesh", name="Wireless mesh access point", note="U7 Mesh, where a cable can't go", kind="qty",
+         own=dict(once=299, monthly=0), lease=dict(once=79, monthly=12)),
+    dict(id="drop", name="Extra cable run", note="Each additional network cable", kind="qty",
+         own=dict(once=149, monthly=0), lease=dict(once=149, monthly=0)),
+    dict(id="splash", name="Guest splash page", note="Your logo, Wi-Fi rules and a button to connect", kind="check", only="home",
+         own=dict(once=99, monthly=5), lease=dict(once=99, monthly=5)),
+    dict(id="voucher", name="Rental and voucher Wi-Fi", note="Airbnb, waiting rooms: codes that expire", kind="check",
+         own=dict(once=149, monthly=10), lease=dict(once=149, monthly=10)),
+    dict(id="iot", name="Separate camera and smart-device network", note="Keeps cameras and gadgets off your computers", kind="check", only="home",
+         own=dict(once=79, monthly=0), lease=dict(once=79, monthly=0)),
+    dict(id="ups", name="Battery backup for the network", note="Keeps Wi-Fi and cameras up through short outages", kind="check",
+         own=dict(once=199, monthly=0), lease=dict(once=0, monthly=10)),
+    dict(id="filter", name="Content filtering and parental controls", note="Block adult and risky sites, ad blocking", kind="check",
+         own=dict(once=0, monthly=5), lease=dict(once=0, monthly=5)),
+  ],
+  included=["24/7 monitoring: we're alerted when your network or an access point goes down",
+            "Firmware and security updates", "Remote changes: Wi-Fi passwords, guest access, blocking a device",
+            "A monthly health check", "One local team to call: on-site visits at our standard service rate"],
+  notes=["Prices don't include internet service or Arkansas sales tax on equipment.",
+         "You buy it: the equipment is yours, and the monthly plan is month to month.",
+         "We own it: no equipment to buy, a 24-month agreement, and we replace failed equipment at no charge.",
+         "Every home is different: we confirm coverage with a free walk-through before anything is installed."],
+)

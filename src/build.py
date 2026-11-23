@@ -3,7 +3,7 @@ import json, os, shutil, html
 from datetime import date
 import hashlib, pathlib
 CSS_V = hashlib.md5(pathlib.Path(__file__).with_name('assets').joinpath('site.css').read_bytes()).hexdigest()[:8]
-from content import SITE, SERVICES, PRICING, PRICING_NOTES, ADDONS, ADDON_NOTES, INDUSTRIES, TOWNS
+from content import SITE, SERVICES, PRICING, PRICING_NOTES, ADDONS, ADDON_NOTES, INDUSTRIES, TOWNS, WIFI
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "public")
@@ -47,7 +47,7 @@ def nav():
 <nav id="mainnav" aria-label="Main"><ul class="nav">
 <li><a href="/">Home</a></li>
 {dd('Services','/services',svc)}
-<li><a href="/managed-it-pricing">IT Pricing</a></li>
+{dd('Pricing','/managed-it-pricing','<li><a href="/managed-it-pricing">Managed IT</a></li><li><a href="/managed-wifi-pricing">Managed Wi-Fi</a></li>')}
 {dd('Industries','/industries',ind)}
 {dd('Service Areas','/service-areas',towns)}
 <li><a href="/about">About</a></li>
@@ -63,7 +63,7 @@ def footer():
 <p><a href="tel:{SITE['phone_tel']}">{SITE['phone_display']}</a><br><a href="mailto:{SITE['email']}">{SITE['email']}</a><br>{SITE['city']}, Arkansas</p>
 <p><a href="{SITE['facebook']}" rel="noopener">Facebook</a></p></div>
 <div><h2>Services</h2><ul>{svc}</ul></div>
-<div><h2>Company</h2><ul><li><a href="{SITE['app_url']}/">Employee login</a></li><li><a href="{SITE['app_url']}/p/">Customer IT Help</a></li><li><a href="/about">About</a></li><li><a href="/managed-it-pricing">IT Pricing</a></li><li><a href="/industries">Industries</a></li><li><a href="/contact">Contact</a></li></ul></div>
+<div><h2>Company</h2><ul><li><a href="{SITE['app_url']}/">Employee login</a></li><li><a href="{SITE['app_url']}/p/">Customer IT Help</a></li><li><a href="/about">About</a></li><li><a href="/managed-it-pricing">IT Pricing</a></li><li><a href="/managed-wifi-pricing">Wi-Fi Pricing</a></li><li><a href="/industries">Industries</a></li><li><a href="/contact">Contact</a></li></ul></div>
 <div><h2>Service Areas</h2><ul>{towns}</ul></div>
 </div><div class="wrap legal">© {date.today().year} {E(SITE['legal'])}. All rights reserved.</div></footer>"""
 
@@ -181,7 +181,8 @@ def build():
                      + '</div><p class="note">Product names are trademarks of their respective owners.</p></div></section>')
         others = [o for o in SERVICES if o["slug"] != s["slug"]]
         prose = "".join(f"<p>{E(p)}</p>" for p in s["body"])
-        pricing_link = '<p><a class="btn btn-ghost-dark" href="/managed-it-pricing">See managed IT pricing</a></p>' if s["slug"] == "managed-it" else ""
+        pricing_link = ('<p><a class="btn btn-ghost-dark" href="/managed-it-pricing">See managed IT pricing</a></p>' if s["slug"] == "managed-it"
+                        else '<p><a class="btn btn-ghost-dark" href="/managed-wifi-pricing">See managed Wi-Fi pricing and build your plan</a></p>' if s["slug"] == "wifi-networking" else "")
         svc_ld = {"@context": "https://schema.org", "@type": "Service", "name": s["title"], "serviceType": s["short"],
                   "provider": {"@type": "LocalBusiness", "name": SITE["name"], "telephone": SITE["phone_tel"], "url": SITE["url"] + "/"},
                   "areaServed": "Arkansas", "description": s["meta"]}
@@ -213,6 +214,8 @@ def build():
          + f'<section class="sec alt" id="add-ons"><div class="wrap"><h2>Malwarebytes and offsite backup on their own</h2><p class="lead-sm">Already have IT staff? Add our endpoint protection or cloud backup without a full managed plan.</p><div class="addons">{addons}</div><ul class="pnotes">{"".join(f"<li>{icon('check')}{E(n)}</li>" for n in ADDON_NOTES)}</ul></div></section>'
          + cta_band("Schedule a free IT assessment."), [ld])
 
+    wifi_page()
+
     # About
     c, ld = crumbs([("Home", "/"), ("About", None)])
     page("/about", "About Stealth Security | Arkansas Security & Managed IT",
@@ -228,7 +231,7 @@ def build():
 
     # Contact
     c, ld = crumbs([("Home", "/"), ("Contact", None)])
-    opts = "".join(f"<option>{E(s['short'])}</option>" for s in SERVICES) + "<option>Multiple services</option>"
+    opts = "".join(f"<option>{E(s['short'])}</option>" for s in SERVICES) + "<option>Managed Wi-Fi</option><option>Multiple services</option>"
     page("/contact", "Contact Stealth Security | Request a Quote",
          "Request a free quote for security, fire alarm, camera, access control or managed IT services. Call 1-479-746-8298.",
          hero("Get in touch", "Request a quote", "Tell us about your building or project and we'll get back to you.", c, buttons=False)
@@ -309,6 +312,79 @@ def build():
         open(os.path.join(OUT, "CNAME"), "w").write(os.environ["CUSTOM_DOMAIN"] + "\n")
     open(os.path.join(OUT, ".nojekyll"), "w").close()
     print(f"Built {len(PAGES)} pages into {OUT}")
+
+def money(n):
+    return f"${n:,.0f}"
+
+def wifi_page():
+    """Managed Wi-Fi: pick home or business, who owns the equipment, a package and add-ons; totals add up live
+    (assets/wifi.js). Without JavaScript every price is still on the page."""
+    c, ld = crumbs([("Home", "/"), ("Pricing", "/managed-it-pricing"), ("Managed Wi-Fi", None)])
+    def plan_card(p, seg):
+        own, lease = p["own"], p.get("lease")
+        if p.get("quote"):
+            own_html = f'<p class="price">from {money(own["equip"])} <span>equipment and install</span></p><p class="mo">from {money(own["monthly"])}<span>/mo</span></p>'
+            lease_html = '<p class="price">Custom quote</p><p class="mo sm">We size it after a walk-through</p>'
+        else:
+            own_html = (f'<p class="price">{money(own["equip"] + own["setup"])} <span>equipment {money(own["equip"])} + install {money(own["setup"])}</span></p>'
+                        f'<p class="mo">{money(own["monthly"])}<span>/mo</span></p>')
+            lease_html = (f'<p class="price">{money(lease["setup"])} <span>setup, no equipment to buy</span></p>'
+                          f'<p class="mo">{money(lease["monthly"])}<span>/mo for {WIFI["term_months"]} months</span></p>')
+        return f"""<label class="wplan{' feat' if p.get('featured') else ''}" data-seg="{seg}">
+<input type="radio" name="plan" value="{p['id']}"{' checked' if p.get('featured') and seg == 'home' else ''}>
+{'<span class="flag">Most popular</span>' if p.get('featured') else ''}
+<span class="wplan-h"><span class="h3">{E(p['name'])}</span><span class="size">{E(p['size'])}</span></span>
+<span class="opt own">{own_html}</span><span class="opt lease">{lease_html}</span>
+{ul(p['items'])}<span class="pick">Select</span></label>"""
+    plans = "".join(plan_card(p, seg) for seg in ("home", "business") for p in WIFI["plans"][seg])
+    def addon_row(a):
+        o, l = a["own"], a["lease"]
+        def pr(x):
+            bits = ([money(x["once"])] if x["once"] else []) + ([f'{money(x["monthly"])}/mo'] if x["monthly"] else [])
+            return " + ".join(bits) or "Included"
+        ctl = (f'<span class="qty"><button type="button" class="q-dn" aria-label="Fewer">−</button><input type="number" name="ad-{a["id"]}" value="0" min="0" max="20" inputmode="numeric" aria-label="How many: {E(a["name"])}"><button type="button" class="q-up" aria-label="More">+</button></span>'
+               if a["kind"] == "qty" else f'<input type="checkbox" name="ad-{a["id"]}" aria-label="{E(a["name"])}">')
+        only = f' data-only="{a["only"]}"' if a.get("only") else ""
+        return f"""<div class="wadd"{only} data-id="{a['id']}"><div><b>{E(a['name'])}</b><span>{E(a['note'])}</span></div>
+<div class="wadd-p"><span class="opt own">{pr(o)}</span><span class="opt lease">{pr(l)}</span></div>{ctl}</div>"""
+    adds = "".join(addon_row(a) for a in WIFI["addons"])
+    data = json.dumps({"term": WIFI["term_months"], "plans": {p["id"]: dict(p, seg=seg) for seg in ("home", "business") for p in WIFI["plans"][seg]},
+                       "addons": {a["id"]: a for a in WIFI["addons"]}}, separators=(",", ":"))
+    incl = "".join(f"<li>{icon('check')}{E(n)}</li>" for n in WIFI["included"])
+    notes = "".join(f"<li>{icon('check')}{E(n)}</li>" for n in WIFI["notes"])
+    body = hero("Managed Wi-Fi", "Managed Wi‑Fi, priced simply",
+                "Business-grade UniFi Wi-Fi for your home or business, set up and looked after by a local team. Buy the equipment, or let us own it for one monthly price.", c, buttons=False) + f"""
+<section class="sec"><div class="wrap">
+<form class="wifi" id="wifi" data-own="own" data-seg="home" onsubmit="return false">
+<div class="wstep"><p class="eyebrow">1. Where is it going?</p>
+<div class="seg" role="radiogroup" aria-label="Home or business">
+<label><input type="radio" name="seg" value="home" checked><span>Home</span></label>
+<label><input type="radio" name="seg" value="business"><span>Small business</span></label></div></div>
+<div class="wstep"><p class="eyebrow">2. Who owns the equipment?</p>
+<div class="seg seg-wide" role="radiogroup" aria-label="Who owns the equipment">
+<label><input type="radio" name="own" value="own" checked><span><b>You buy it</b><small>Pay for the equipment once, then a low monthly plan, month to month</small></span></label>
+<label><input type="radio" name="own" value="lease"><span><b>We own it</b><small>Small setup fee, one monthly price for {WIFI['term_months']} months, failed gear replaced free</small></span></label></div></div>
+<div class="wstep"><p class="eyebrow">3. Pick a package</p><div class="wplans">{plans}</div></div>
+<div class="wgrid">
+<div class="wstep"><p class="eyebrow">4. Add what you need</p><div class="wadds">{adds}</div></div>
+<aside class="wsum" aria-live="polite"><p class="eyebrow">Your plan</p>
+<p class="wsum-plan" id="ws-plan">Home Plus</p><ul class="wsum-lines" id="ws-lines"></ul>
+<div class="wsum-tot"><div><span>One time</span><b id="ws-once">–</b></div><div><span>Monthly</span><b id="ws-mo">–</b></div></div>
+<p class="wsum-note" id="ws-note">Plus sales tax on equipment. Internet service not included.</p>
+<a class="btn" id="ws-quote" href="/contact">Request this quote</a>
+<p class="wsum-small">No obligation. We confirm coverage with a free walk-through first.</p></aside>
+</div></form>
+<div class="split wincl"><div><h2 class="h3">Every monthly plan includes</h2><ul class="pnotes">{incl}</ul></div>
+<div><h2 class="h3">Good to know</h2><ul class="pnotes">{notes}</ul></div></div>
+</div></section>
+<a class="wbar" href="#ws-plan" aria-hidden="true" tabindex="-1"><span>One time <b id="wb-once">–</b></span><span>Monthly <b id="wb-mo">–</b></span><span class="wbar-go">Review</span></a>
+<script type="application/json" id="wifi-data">{data}</script><script src="/assets/wifi.js?v={CSS_V}" defer></script>
+{cta_band("Not sure which package fits?", f"Call {SITE['phone_display']} and we'll walk your building for free.")}"""
+    page("/managed-wifi-pricing", "Managed Wi-Fi Pricing | UniFi Wi-Fi for Homes & Small Businesses in Arkansas",
+         "Managed UniFi Wi-Fi from $15 a month. Pick home or business, buy the equipment or let us own it, and build your plan with add-ons. Clarksville, River Valley and Northwest Arkansas.",
+         body, [ld, {"@context": "https://schema.org", "@type": "Service", "name": "Managed Wi-Fi", "provider": {"@type": "LocalBusiness", "name": SITE["name"]},
+                     "areaServed": "Arkansas", "offers": [{"@type": "Offer", "name": p["name"], "price": p["own"]["monthly"], "priceCurrency": "USD",
+                     "description": f'{p["size"]}; monthly management, customer-owned equipment'} for seg in ("home", "business") for p in WIFI["plans"][seg]]}])
 
 if __name__ == "__main__":
     build()
