@@ -16,6 +16,12 @@
   var f = document.getElementById('quote');
   if (!f) return;
   var status = f.querySelector('.form-status');
+  // Prefill from links like /contact?service=Managed%20Wi-Fi&message=... (the Wi-Fi plan builder)
+  try {
+    var q = new URLSearchParams(location.search), sv = q.get('service'), m = q.get('message');
+    if (sv) { var sel = f.querySelector('[name=service]'); Array.prototype.forEach.call(sel.options, function (o) { if (o.text === sv) sel.value = o.value || o.text; }); }
+    if (m) { var ta = f.querySelector('[name=message]'); ta.value = m.slice(0, 4000); }
+  } catch (e) {}
   function say(msg, cls) { status.textContent = msg; status.className = 'form-status ' + (cls || ''); }
   f.addEventListener('submit', function (e) {
     e.preventDefault();
