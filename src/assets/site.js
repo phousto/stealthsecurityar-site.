@@ -32,7 +32,10 @@
     var ep = f.dataset.endpoint;
     if (ep) {
       say('Sending…');
-      fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
+      var lead = { name: d.name, email: d.email, phone: d.phone || '', source: 'stealthsecurityar', page: location.pathname,
+        message: (d.service ? 'Service: ' + d.service + '\n' : '') + (d.town ? 'Town: ' + d.town + '\n' : '') + d.message };
+      try { var u = new URLSearchParams(location.search); ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) { if (u.get(k)) lead[k] = u.get(k).slice(0, 200); }); } catch (e) {}
+      fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead) })
         .then(function (r) { if (!r.ok) throw 0; f.reset(); say('Thanks! We received your request and will be in touch soon.', 'ok'); })
         .catch(function () { say('That didn\'t send. Please call 1-479-746-8298 or email ' + f.dataset.email + '.', 'err'); });
     } else {

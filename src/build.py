@@ -7,7 +7,7 @@ from content import SITE, SERVICES, PRICING, PRICING_NOTES, ADDONS, ADDON_NOTES,
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "public")
-FORM_ENDPOINT = os.environ.get("FORM_ENDPOINT", "")  # set when a lead endpoint exists
+FORM_ENDPOINT = os.environ.get("FORM_ENDPOINT", "https://app.stealthsecurityar.com/api/leads")  # StealthOP lead capture; set FORM_ENDPOINT="" to fall back to email
 E = html.escape
 PAGES = []  # paths for sitemap
 
